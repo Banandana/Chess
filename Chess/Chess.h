@@ -15,4 +15,7 @@ class Chess {
  public:
   Chess();
   virtual ~Chess();
+
+  void Play();
+
 };

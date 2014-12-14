@@ -23,3 +23,7 @@ Chess::~Chess() {
   // TODO Auto-generated destructor stub
 }
 
+void Chess::Play()
+{
+
+}
