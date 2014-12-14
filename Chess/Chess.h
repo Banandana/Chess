@@ -7,15 +7,16 @@
 
 #pragma once
 #include "ChessPiece.h"
-
+#include "common.h"
 
 class Chess {
-  ChessPiece* board[8][8];
-
+  ChessPiece** board[8][8];
+  Team currentTurn;
  public:
   Chess();
   virtual ~Chess();
 
   void Play();
+  void InitializeGameBoard();
 
 };

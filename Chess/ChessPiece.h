@@ -30,10 +30,6 @@ class ChessPiece {
   virtual bool isBlank() = 0;
   virtual Team getTeam() = 0;
 
-
-  virtual bool verifyMovementAbility(Point, Point) = 0;
-  virtual bool verifyAttackAbility(Point, Point) = 0;
-
   ChessPiece();
   virtual ~ChessPiece();
 };

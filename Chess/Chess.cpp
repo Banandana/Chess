@@ -17,13 +17,35 @@ Chess::Chess() {
       board[i][j] = 0;
     }
   }
+
+  //Set the white to the current turn
+  currentTurn = Team::White;
 }
 
 Chess::~Chess() {
   // TODO Auto-generated destructor stub
+	for (int i = 0; i < 8; i++)
+	{
+		for (int j = 0; j < 8; j++)
+		{
+			delete board[i][j];
+		}
+		delete[] board[i];
+	}
+}
+
+void Chess::InitializeGameBoard()
+{
+	//Set the board
 }
 
 void Chess::Play()
 {
-
+	for (int i = 0; i < 8; i++)
+	{
+		for (int j = 0; j < 8; j++)
+		{
+			cout << "[" << board[i][j] << "]";
+		}
+	}
 }

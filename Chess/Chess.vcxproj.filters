@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\Pieces">
-      <UniqueIdentifier>{62eea931-e6db-410b-b99d-0c8aec36dff3}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Chess.h">
@@ -29,9 +26,6 @@
     </ClInclude>
     <ClInclude Include="Point.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Pieces\Pawn.h">
-      <Filter>Header Files\Pieces</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
