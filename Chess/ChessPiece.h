@@ -38,12 +38,14 @@ class ChessPiece {
 	string name_;
 	bool critical_;
 	Team team_;
-
+	int points = 2;
 	
 
 public:
 	string getName();
 	ChessPiece* setName(string name);
+	ChessPiece* setPointValue(int point);
+	int getPointValue();
 	bool isCritical();
 	ChessPiece* setCritical(bool crit);
 	Team getTeam();

@@ -57,3 +57,14 @@ ChessPiece* ChessPiece::setTeam(Team t)
 	team_ = t;
 	return this;
 }
+
+ChessPiece* ChessPiece::setPointValue(int p)
+{
+	points = p;
+	return this;
+}
+
+int ChessPiece::getPointValue()
+{
+	return points;
+}

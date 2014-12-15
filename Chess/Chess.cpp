@@ -6,6 +6,8 @@
  */
 
 #include "Chess.h"
+#include "CinReader.h"
+#include "PointPair.h"
 #include <string>
 Chess::Chess() {
 	// TODO Auto-generated constructor stub
@@ -45,35 +47,43 @@ void Chess::InitializeGameBoard()
 	board[0][0] = new ChessPiece();
 	board[0][0]->setTeam(Team::Black)
 		->setCritical(false)
-		->setName("R");
+		->setName("R")
+		->setPointValue(3);
 	board[1][0] = new ChessPiece();
 	board[1][0]->setTeam(Team::Black)
 		->setCritical(false)
-		->setName("N");
+		->setName("N")
+		->setPointValue(2);
 	board[2][0] = new ChessPiece();
 	board[2][0]->setTeam(Team::Black)
 		->setCritical(false)
-		->setName("B");
+		->setName("B")
+		->setPointValue(4);
 	board[3][0] = new ChessPiece();
 	board[3][0]->setTeam(Team::Black)
 		->setCritical(false)
-		->setName("Q");
+		->setName("Q")
+		->setPointValue(10);
 	board[4][0] = new ChessPiece();
 	board[4][0]->setTeam(Team::Black)
 		->setCritical(true)
-		->setName("K");
+		->setName("K")
+		->setPointValue(100);
 	board[5][0] = new ChessPiece();
 	board[5][0]->setTeam(Team::Black)
 		->setCritical(false)
-		->setName("B");
+		->setName("B")
+		->setPointValue(4);
 	board[6][0] = new ChessPiece();
 	board[6][0]->setTeam(Team::Black)
 		->setCritical(false)
-		->setName("N");
+		->setName("N")
+		->setPointValue(2);
 	board[7][0] = new ChessPiece();
 	board[7][0]->setTeam(Team::Black)
 		->setCritical(false)
-		->setName("R");
+		->setName("R")
+		->setPointValue(3);
 
 	//Pawns
 	for (int i = 0; i < 8; i++)
@@ -81,7 +91,8 @@ void Chess::InitializeGameBoard()
 		board[i][1] = new ChessPiece();
 		board[i][1]->setTeam(Team::Black)
 			->setCritical(false)
-			->setName("P");
+			->setName("P")
+			->setPointValue(1);
 	}
 
 
@@ -89,35 +100,43 @@ void Chess::InitializeGameBoard()
 	board[0][7] = new ChessPiece();
 	board[0][7]->setTeam(Team::White)
 		->setCritical(false)
-		->setName("r");
+		->setName("r")
+		->setPointValue(3);
 	board[1][7] = new ChessPiece();
 	board[1][7]->setTeam(Team::White)
 		->setCritical(false)
-		->setName("n");
+		->setName("n")
+		->setPointValue(2);
 	board[2][7] = new ChessPiece();
 	board[2][7]->setTeam(Team::White)
 		->setCritical(false)
-		->setName("b");
-	board[3][7] = new ChessPiece();
-	board[3][7]->setTeam(Team::White)
-		->setCritical(false)
-		->setName("q");
+		->setName("b")
+		->setPointValue(4);
 	board[4][7] = new ChessPiece();
 	board[4][7]->setTeam(Team::White)
+		->setCritical(false)
+		->setName("q")
+		->setPointValue(10);
+	board[3][7] = new ChessPiece();
+	board[3][7]->setTeam(Team::White)
 		->setCritical(true)
-		->setName("k");
+		->setName("k")
+		->setPointValue(100);
 	board[5][7] = new ChessPiece();
 	board[5][7]->setTeam(Team::White)
 		->setCritical(false)
-		->setName("b");
+		->setName("b")
+		->setPointValue(4);
 	board[6][7] = new ChessPiece();
 	board[6][7]->setTeam(Team::White)
 		->setCritical(false)
-		->setName("n");
+		->setName("n")
+		->setPointValue(2);
 	board[7][7] = new ChessPiece();
 	board[7][7]->setTeam(Team::White)
 		->setCritical(false)
-		->setName("r");
+		->setName("r")
+		->setPointValue(3);
 
 	//Pawns
 	for (int i = 0; i < 8; i++)
@@ -125,21 +144,59 @@ void Chess::InitializeGameBoard()
 		board[i][6] = new ChessPiece();
 		board[i][6]->setTeam(Team::White)
 			->setCritical(false)
-			->setName("p");
+			->setName("p")
+			->setPointValue(1);
 	}
 
 }
 
 void Chess::Render()
 {
+	//ASCII character for 'A'
+	int alpha_start = 65;
+
+	//This is the gap at 0,0 before the actual board
+	cout << "[X]";
+
+	//We then output a number column for the Xs
+	for (int q = 0; q < 8; q++)
+	{
+		cout << "[" << q << "]";
+	}
+
+	//Depending on what team's turn it is, we
+	//also conveniently output the team info
+	if (currentTurn == White)
+		cout << "| White's turn. (LOWERCASE)" << endl;
+	else cout << "| Black's turn. (UPPERCASE)" << endl;
+
+	//Iterate Xs
 	for (int i = 0; i < 8; i++)
 	{
+		//Output a letter for the Y column at the
+		//beginning of each X row
+		cout << "[" << (char)(65 + i) << "]";
+		
+		//For each x in this Y row
 		for (int j = 0; j < 8; j++)
 		{
+			//Output the name of the piece
 			cout << "[" << board[j][i]->getName() << "]";
 		}
-		cout << endl;
+
+		//This is a fancy way of outputting more info
+		//like current number of points, etc
+		if (i == 0)
+			cout << "| White: " << GetPointTotal(White) << " points." << endl;
+		else if (i == 1)
+			cout << "| Black: " << GetPointTotal(Black) << " points." << endl;
+		else if (i == 2)
+			cout << "| Number of turns: " << turncount << endl;
+		else cout << "|" << endl;
 	}
+
+	//Padding
+	cout << endl;
 }
 
 int Chess::GetCriticalPieceCount(Team t)
@@ -156,19 +213,69 @@ int Chess::GetCriticalPieceCount(Team t)
 	return critical_piece_count;
 }
 
+int Chess::GetPointTotal(Team t)
+{
+	int point_total = 0;
+	for (int i = 0; i < 8; i++)
+	{
+		for (int j = 0; j < 8; j++)
+		{
+			if (t == board[i][j]->getTeam())
+				point_total += board[i][j]->getPointValue();
+		}
+	}
+	return point_total;
+}
+
+PointPair Chess::GrabMovementData()
+{
+	CinReader reader;
+	//Select the piece
+	while (true)
+	{
+		cout << "Enter the NUMBER the piece you would like to select resides in."
+			<< endl;
+		int X = reader.readInt(0, 7);
+
+		cout << "Now enter the LETTER the piece you would like to select resides in."
+			<< endl;
+
+		char row = reader.readChar("ABCDEFGHabcdefgh");
+
+		if (board[X][(int)row - 65]->getTeam() != currentTurn)
+		{
+			cout << "This piece is not yours." << endl;
+			continue;
+		}
+
+		if (board[X][(int)row - 65]->getName() == " ")
+		{
+			cout << "That space is empty." << endl;
+			continue;
+		}
+
+		//We have a valid selection
+
+	}
+
+}
+
 void Chess::HandleTeamMovement()
 {
 	if (currentTurn == White)
 	{
 		//Only allow white to move
-		cout << "White may move. Please enter an X and Y value of what"
-			<< "piece you would like to select.";
-
-
+		cout << "White may move. ";
+		
+		auto movement = GrabMovementData();
+		
 	}
 	else
 	{
 		//Only allow black to move
+		cout << "Black may move. ";
+
+		auto movement = GrabMovementData();
 	}
 }
 
@@ -202,5 +309,6 @@ void Chess::Play()
 		//Swap turns
 		if (currentTurn == Team::White) currentTurn = Team::Black;
 		else currentTurn = Team::White;
+		turncount++;
 	} while (!quitting);
 }
