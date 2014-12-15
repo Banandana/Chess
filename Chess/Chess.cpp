@@ -7,7 +7,7 @@
 
 #include "Chess.h"
 #include "CinReader.h"
-#include "PointPair.h"
+#include "Movement.h"
 #include <string>
 Chess::Chess() {
 	// TODO Auto-generated constructor stub
@@ -227,8 +227,10 @@ int Chess::GetPointTotal(Team t)
 	return point_total;
 }
 
-PointPair Chess::GrabMovementData()
+Move Chess::GrabMovementData()
 {
+	Move ret_movement;
+
 	CinReader reader;
 	//Select the piece
 	while (true)
@@ -255,9 +257,38 @@ PointPair Chess::GrabMovementData()
 		}
 
 		//We have a valid selection
+		//Set the 'from' item
 
+		ret_movement.From = Point(X, (int)row - 65);
+		break;
 	}
 
+	//Select the destination
+	while (true)
+	{
+		cout << "Enter the NUMBER the location you would like to move to is at."
+			<< endl;
+		int X = reader.readInt(0, 7);
+
+		cout << "Now enter the LETTER the location you would like to move to is at."
+			<< endl;
+
+		char row = reader.readChar("ABCDEFGHabcdefgh");
+
+		if (board[X][(int)row - 65]->getTeam() == currentTurn)
+		{
+			cout << "You cannot overwrite your own piece." << endl;
+			continue;
+		}
+
+		//We have a valid destination
+		//Set the 'from' item
+
+		ret_movement.To = Point(X, (int)row - 65);
+		break;
+	}
+
+	return ret_movement;
 }
 
 void Chess::HandleTeamMovement()
@@ -269,6 +300,8 @@ void Chess::HandleTeamMovement()
 		
 		auto movement = GrabMovementData();
 		
+
+
 	}
 	else
 	{

@@ -30,7 +30,7 @@
     <ClInclude Include="CinReader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PointPair.h">
+    <ClInclude Include="Movement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

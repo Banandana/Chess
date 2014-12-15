@@ -8,7 +8,7 @@
 #pragma once
 #include "ChessPiece.h"
 #include "common.h"
-#include "PointPair.h"
+#include "Movement.h"
 
 class Chess {
   ChessPiece* board[8][8];
@@ -21,7 +21,7 @@ class Chess {
   void InitializeGameBoard();
   int GetCriticalPieceCount(Team);
   int GetPointTotal(Team);
-  PointPair GrabMovementData();
+  Move GrabMovementData();
   void HandleTeamMovement();
  public:
   Chess();
