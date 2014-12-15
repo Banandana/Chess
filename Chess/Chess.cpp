@@ -12,12 +12,15 @@
 Chess::Chess() {
 	// TODO Auto-generated constructor stub
 	//Do stuff like make teh board an 8x8 array of 0s
+
+	board = new ChessPiece*[8];
 	for (int i = 0; i < 8; i++)
 	{
+		board[i] = new ChessPiece[8];
 		for (int j = 0; j < 8; j++)
 		{
-			board[i][j] = new ChessPiece();
-			board[i][j]->setName(" ");
+			board[i][j] = ChessPiece();
+			board[i][j].setName(" ");
 		}
 	}
 
@@ -29,12 +32,9 @@ Chess::~Chess() {
 	// TODO Auto-generated destructor stub
 	for (int i = 0; i < 8; i++)
 	{
-		for (int j = 0; j < 8; j++)
-		{
-			delete board[i][j];
-		}
 		delete[] board[i];
 	}
+	delete[] board;
 }
 
 void Chess::InitializeGameBoard()
@@ -44,43 +44,35 @@ void Chess::InitializeGameBoard()
 	//This function is inherently bad.
 
 	//Set the top black row
-	board[0][0] = new ChessPiece();
-	board[0][0]->setTeam(Team::Black)
+	board[0][0].setTeam(Team::Black)
 		->setCritical(false)
 		->setName("R")
 		->setPointValue(3);
-	board[1][0] = new ChessPiece();
-	board[1][0]->setTeam(Team::Black)
+	board[1][0].setTeam(Team::Black)
 		->setCritical(false)
 		->setName("N")
 		->setPointValue(2);
-	board[2][0] = new ChessPiece();
-	board[2][0]->setTeam(Team::Black)
+	board[2][0].setTeam(Team::Black)
 		->setCritical(false)
 		->setName("B")
 		->setPointValue(4);
-	board[3][0] = new ChessPiece();
-	board[3][0]->setTeam(Team::Black)
+	board[3][0].setTeam(Team::Black)
 		->setCritical(false)
 		->setName("Q")
 		->setPointValue(10);
-	board[4][0] = new ChessPiece();
-	board[4][0]->setTeam(Team::Black)
+	board[4][0].setTeam(Team::Black)
 		->setCritical(true)
 		->setName("K")
 		->setPointValue(100);
-	board[5][0] = new ChessPiece();
-	board[5][0]->setTeam(Team::Black)
+	board[5][0].setTeam(Team::Black)
 		->setCritical(false)
 		->setName("B")
 		->setPointValue(4);
-	board[6][0] = new ChessPiece();
-	board[6][0]->setTeam(Team::Black)
+	board[6][0].setTeam(Team::Black)
 		->setCritical(false)
 		->setName("N")
 		->setPointValue(2);
-	board[7][0] = new ChessPiece();
-	board[7][0]->setTeam(Team::Black)
+	board[7][0].setTeam(Team::Black)
 		->setCritical(false)
 		->setName("R")
 		->setPointValue(3);
@@ -88,8 +80,7 @@ void Chess::InitializeGameBoard()
 	//Pawns
 	for (int i = 0; i < 8; i++)
 	{
-		board[i][1] = new ChessPiece();
-		board[i][1]->setTeam(Team::Black)
+		board[i][1].setTeam(Team::Black)
 			->setCritical(false)
 			->setName("P")
 			->setPointValue(1);
@@ -97,43 +88,35 @@ void Chess::InitializeGameBoard()
 
 
 	//Set the bottom white row
-	board[0][7] = new ChessPiece();
-	board[0][7]->setTeam(Team::White)
+	board[0][7].setTeam(Team::White)
 		->setCritical(false)
 		->setName("r")
 		->setPointValue(3);
-	board[1][7] = new ChessPiece();
-	board[1][7]->setTeam(Team::White)
+	board[1][7].setTeam(Team::White)
 		->setCritical(false)
 		->setName("n")
 		->setPointValue(2);
-	board[2][7] = new ChessPiece();
-	board[2][7]->setTeam(Team::White)
+	board[2][7].setTeam(Team::White)
 		->setCritical(false)
 		->setName("b")
 		->setPointValue(4);
-	board[4][7] = new ChessPiece();
-	board[4][7]->setTeam(Team::White)
+	board[4][7].setTeam(Team::White)
 		->setCritical(false)
 		->setName("q")
 		->setPointValue(10);
-	board[3][7] = new ChessPiece();
-	board[3][7]->setTeam(Team::White)
+	board[3][7].setTeam(Team::White)
 		->setCritical(true)
 		->setName("k")
 		->setPointValue(100);
-	board[5][7] = new ChessPiece();
-	board[5][7]->setTeam(Team::White)
+	board[5][7].setTeam(Team::White)
 		->setCritical(false)
 		->setName("b")
 		->setPointValue(4);
-	board[6][7] = new ChessPiece();
-	board[6][7]->setTeam(Team::White)
+	board[6][7].setTeam(Team::White)
 		->setCritical(false)
 		->setName("n")
 		->setPointValue(2);
-	board[7][7] = new ChessPiece();
-	board[7][7]->setTeam(Team::White)
+	board[7][7].setTeam(Team::White)
 		->setCritical(false)
 		->setName("r")
 		->setPointValue(3);
@@ -141,8 +124,7 @@ void Chess::InitializeGameBoard()
 	//Pawns
 	for (int i = 0; i < 8; i++)
 	{
-		board[i][6] = new ChessPiece();
-		board[i][6]->setTeam(Team::White)
+		board[i][6].setTeam(Team::White)
 			->setCritical(false)
 			->setName("p")
 			->setPointValue(1);
@@ -181,7 +163,7 @@ void Chess::Render()
 		for (int j = 0; j < 8; j++)
 		{
 			//Output the name of the piece
-			cout << "[" << board[j][i]->getName() << "]";
+			cout << "[" << board[j][i].getName() << "]";
 		}
 
 		//This is a fancy way of outputting more info
@@ -206,8 +188,8 @@ int Chess::GetCriticalPieceCount(Team t)
 	{
 		for (int j = 0; j < 8; j++)
 		{
-			if (board[i][j]->isCritical() &&
-				t == board[i][j]->getTeam()) critical_piece_count++;
+			if (board[i][j].isCritical() &&
+				t == board[i][j].getTeam()) critical_piece_count++;
 		}
 	}
 	return critical_piece_count;
@@ -220,8 +202,8 @@ int Chess::GetPointTotal(Team t)
 	{
 		for (int j = 0; j < 8; j++)
 		{
-			if (t == board[i][j]->getTeam())
-				point_total += board[i][j]->getPointValue();
+			if (t == board[i][j].getTeam())
+				point_total += board[i][j].getPointValue();
 		}
 	}
 	return point_total;
@@ -244,13 +226,13 @@ Move Chess::GrabMovementData()
 
 		char row = reader.readChar("ABCDEFGHabcdefgh");
 
-		if (board[X][(int)row - 65]->getTeam() != currentTurn)
+		if (board[X][(int)row - 65].getTeam() != currentTurn)
 		{
 			cout << "This piece is not yours." << endl;
 			continue;
 		}
 
-		if (board[X][(int)row - 65]->getName() == " ")
+		if (board[X][(int)row - 65].getName() == " ")
 		{
 			cout << "That space is empty." << endl;
 			continue;
@@ -275,7 +257,7 @@ Move Chess::GrabMovementData()
 
 		char row = reader.readChar("ABCDEFGHabcdefgh");
 
-		if (board[X][(int)row - 65]->getTeam() == currentTurn)
+		if (board[X][(int)row - 65].getTeam() == currentTurn)
 		{
 			cout << "You cannot overwrite your own piece." << endl;
 			continue;
@@ -298,6 +280,7 @@ void Chess::HandleTeamMovement()
 		//Only allow white to move
 		cout << "White may move. ";
 		
+		//Get the movement data
 		auto movement = GrabMovementData();
 		
 
@@ -308,6 +291,7 @@ void Chess::HandleTeamMovement()
 		//Only allow black to move
 		cout << "Black may move. ";
 
+		//Get the movement data
 		auto movement = GrabMovementData();
 	}
 }

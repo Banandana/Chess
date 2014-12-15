@@ -11,7 +11,9 @@
 #include "Movement.h"
 
 class Chess {
-  ChessPiece* board[8][8];
+  ChessPiece** board;
+
+
   Team currentTurn;
 
   bool quitting;
