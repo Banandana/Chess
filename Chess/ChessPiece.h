@@ -13,23 +13,41 @@ using namespace std;
 
 enum BehaviorStyle
 {
-  Continuous,
-  Incremental
+	Continuous,
+	Incremental
 };
 
 enum Team
 {
-  Black,
-  White
+	Black,
+	White
+};
+
+enum PieceModifierType
+{
+	Blank,
+	Movable,
+	Attackable,
+	Movable_Recursive,
+	Attackable_Recursive
 };
 
 class ChessPiece {
- public:
-  virtual string getName() = 0;
-  virtual bool isCritical() = 0;
-  virtual bool isBlank() = 0;
-  virtual Team getTeam() = 0;
+	//Have a 5x5 movement and attack grid for each piece
+	string name_;
+	bool critical_;
+	Team team_;
 
-  ChessPiece();
-  virtual ~ChessPiece();
+	
+
+public:
+	string getName();
+	ChessPiece* setName(string name);
+	bool isCritical();
+	ChessPiece* setCritical(bool crit);
+	Team getTeam();
+	ChessPiece* setTeam(Team t);
+	PieceModifierType** Movement_Attack_Grid;
+	ChessPiece();
+	~ChessPiece();
 };
