@@ -19,6 +19,7 @@ enum BehaviorStyle
 
 enum Team
 {
+	None = 0,
 	Black,
 	White
 };

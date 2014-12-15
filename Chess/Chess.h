@@ -12,12 +12,14 @@
 class Chess {
   ChessPiece* board[8][8];
   Team currentTurn;
+
+  bool quitting;
+  void Render();
+  void InitializeGameBoard();
+  int GetCriticalPieceCount(Team);
+  void HandleTeamMovement();
  public:
   Chess();
   virtual ~Chess();
-
-  void Render();
   void Play();
-  void InitializeGameBoard();
-
 };

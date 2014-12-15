@@ -142,10 +142,62 @@ void Chess::Render()
 	}
 }
 
+int Chess::GetCriticalPieceCount(Team t)
+{
+	int critical_piece_count = 0;
+	for (int i = 0; i < 8; i++)
+	{
+		for (int j = 0; j < 8; j++)
+		{
+			if (board[i][j]->isCritical() &&
+				t == board[i][j]->getTeam()) critical_piece_count++;
+		}
+	}
+	return critical_piece_count;
+}
+
+void Chess::HandleTeamMovement()
+{
+	if (currentTurn == White)
+	{
+		//Only allow white to move
+	}
+	else
+	{
+		//Only allow black to move
+	}
+}
+
 void Chess::Play()
 {
 	//init here
 	InitializeGameBoard();
 
-	
+	//Count critical pieces
+	int crit_piece_count_white = GetCriticalPieceCount(White);
+	int crit_piece_count_black = GetCriticalPieceCount(Black);
+
+	do {
+		//Render
+		Render();
+
+		//Do game logic here
+		if (crit_piece_count_black > GetCriticalPieceCount(Black))
+		{
+			//White wins
+			cout << "White wins. A critical black piece was destroyed.";
+		}
+		if (crit_piece_count_white > GetCriticalPieceCount(White))
+		{
+			//Black wins
+			cout << "Black wins. A critical white piece was destroyed.";
+		}
+
+		
+
+
+		//Swap turns
+		if (currentTurn == Team::White) currentTurn = Team::Black;
+		else currentTurn = Team::White;
+	} while (!quitting);
 }
