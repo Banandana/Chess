@@ -161,6 +161,10 @@ void Chess::HandleTeamMovement()
 	if (currentTurn == White)
 	{
 		//Only allow white to move
+		cout << "White may move. Please enter an X and Y value of what"
+			<< "piece you would like to select.";
+
+
 	}
 	else
 	{
@@ -193,8 +197,7 @@ void Chess::Play()
 			cout << "Black wins. A critical white piece was destroyed.";
 		}
 
-		
-
+		HandleTeamMovement();
 
 		//Swap turns
 		if (currentTurn == Team::White) currentTurn = Team::Black;
