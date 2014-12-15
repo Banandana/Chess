@@ -9,6 +9,15 @@
 #include "CinReader.h"
 #include "Movement.h"
 #include <string>
+
+enum MenuChoice
+{
+	MovePiece,
+	Undo,
+	Restart,
+	Quit
+};
+
 Chess::Chess() {
 	// TODO Auto-generated constructor stub
 	//Do stuff like make teh board an 8x8 array of 0s
@@ -242,6 +251,7 @@ Move Chess::GrabMovementData()
 		//Set the 'from' item
 
 		ret_movement.From = Point(X, (int)row - 65);
+		ret_movement.PieceFrom = board[X][(int)row - 65];
 		break;
 	}
 
@@ -267,6 +277,7 @@ Move Chess::GrabMovementData()
 		//Set the 'from' item
 
 		ret_movement.To = Point(X, (int)row - 65);
+		ret_movement.PieceTo = board[X][(int)row - 65];
 		break;
 	}
 
@@ -276,24 +287,52 @@ Move Chess::GrabMovementData()
 void Chess::HandleTeamMovement()
 {
 	if (currentTurn == White)
-	{
-		//Only allow white to move
 		cout << "White may move. ";
-		
-		//Get the movement data
-		auto movement = GrabMovementData();
-		
-
-
-	}
 	else
-	{
-		//Only allow black to move
 		cout << "Black may move. ";
-
 		//Get the movement data
 		auto movement = GrabMovementData();
-	}
+		
+		//Record the last movement from the player
+		lastMove = movement;
+
+		//Set the location the piece will move to to the actual value of the
+		//piece from.
+		board[movement.To.X][movement.To.Y] = movement.PieceFrom;
+
+		//Set the blank space
+		board[movement.From.X][movement.From.Y] = ChessPiece();
+		board[movement.From.X][movement.From.Y].setName(" ")
+			->setTeam(Team::None)
+			->setPointValue(0)
+			->setCritical(false);
+	
+}
+
+void Chess::Restart()
+{
+	//Reset the board
+	InitializeGameBoard();
+	
+	//Set board to white
+	currentTurn = White;
+	
+	//Remove undo data
+	lastMove.From = Point();
+	lastMove.To = Point();
+	lastMove.PieceFrom = ChessPiece();
+	lastMove.PieceTo = ChessPiece();
+
+	turncount = 0;
+
+	quitting = false;
+}
+
+void Chess::Undo()
+{
+	//Set the pieces to their old values
+	board[lastMove.From.X][lastMove.From.Y] = lastMove.PieceFrom;
+	board[lastMove.To.X][lastMove.To.Y] = lastMove.PieceTo;
 }
 
 void Chess::Play()
@@ -321,7 +360,18 @@ void Chess::Play()
 			cout << "Black wins. A critical white piece was destroyed.";
 		}
 
-		HandleTeamMovement();
+		CinReader reader;
+
+		cout << "Press m to move, u to undo, r to reset, or q to quit" << endl;
+		char choice = tolower(reader.readChar("mMuUrRqQ"));
+
+		if (choice == 'm')
+			HandleTeamMovement();
+		else if (choice == 'u')
+			Undo();
+		else if (choice == 'r')
+			Restart();
+		else quitting = true;
 
 		//Swap turns
 		if (currentTurn == Team::White) currentTurn = Team::Black;

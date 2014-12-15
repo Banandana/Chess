@@ -13,6 +13,7 @@
 class Chess {
   ChessPiece** board;
 
+  Move lastMove;
 
   Team currentTurn;
 
@@ -20,6 +21,8 @@ class Chess {
   int turncount = 0;
 
   void Render();
+  void Restart();
+  void Undo();
   void InitializeGameBoard();
   int GetCriticalPieceCount(Team);
   int GetPointTotal(Team);

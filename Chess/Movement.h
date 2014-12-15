@@ -5,4 +5,6 @@ struct Move
 {
 	Point From;
 	Point To;
+	ChessPiece PieceFrom;
+	ChessPiece PieceTo;
 };
