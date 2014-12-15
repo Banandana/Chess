@@ -52,6 +52,19 @@ void Chess::InitializeGameBoard()
 
 	//This function is inherently bad.
 
+	//Clear the board.
+	for (int i = 0; i < 8; i++)
+	{
+		for (int j = 0; j < 8; j++)
+		{
+			board[i][j].setName(" ")
+				->setTeam(Team::None)
+				->setPointValue(0)
+				->setCritical(false);
+		}
+	}
+
+
 	//Set the top black row
 	board[0][0].setTeam(Team::Black)
 		->setCritical(false)
